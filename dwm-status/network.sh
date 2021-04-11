@@ -8,9 +8,9 @@ eth="enp0s23"
 wlan="wlp2s0"
 
 ### Check which interface is being used, and display a message accordingly
-if [ -r "/sys/class/net/$wlan/carrier" ]; then
+if [ $(cat /sys/class/net/$wlan/carrier) == "1"  ]; then
         echo "$(nmcli -t -f active,ssid, dev wifi | grep '^yes' | cut -d ':' -f2)"
-elif [ -r "cat /sys/class/net/$eth/carrier" ]; then 
+elif [ $(cat /sys/class/net/$eth/carrier) == "1" ]; then 
         echo "LAN Connected"
 else
         echo "No network"
