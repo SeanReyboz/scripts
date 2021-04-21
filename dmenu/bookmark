@@ -1,0 +1,33 @@
+#!/bin/env bash
+
+# A bookmark shell script to quickly access common urls with dmenu
+
+BROWSER="firefox"
+#BROWSER="librewolf"
+
+declare -a options=(
+"animemes - https://reddit.com/r/animemes"
+"arch Wiki - https://wiki.archlinux.org"
+"gentoo Wiki - https://wiki.gentoo.org"
+"intranet - https://intranet.univ-smb.fr"
+"linuxmemes - https://reddit.com/r/linuxmemes"
+"MMI Chy - https://mmi.univ-smb.fr/site"
+"moodle - https://moodle-iutchy.univ-savoie.fr"
+"nixP - https://reddit.com/r/unixporn"
+"odysee - https://odysee.com"
+"tutanota - https://mail.tutanota.com"
+"youTube - https://youtube.com"
+"quit"
+)
+
+choice=$(printf '%s\n' "${options[@]}" | dmenu -c -i -l 20)
+
+if [[ "$choice" == "quit" ]]; then
+	echo "Exiting..." && exit 1
+elif [ "$choice" ]; then
+	url=$(printf '%s\n' "$choice" | awk '{print $NF}')
+	$BROWSER $url
+else
+	echo "User interrupt..." && exit 1
+fi
+
