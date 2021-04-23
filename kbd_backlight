@@ -1,0 +1,16 @@
+#!/bin/sh
+# Author: Sean Reyboz
+
+# get current brght
+current=$(brightnessctl -d asus::kbd_backlight get)
+
+case $1 in 
+    "up")
+        [ $current -ne 3 ] && new=$(( $current + 1 )) || exit 0 
+        ;;
+    "down")
+        [ $current -ne 0 ] && new=$(( $current - 1 )) || exit 0
+        ;;
+esac
+
+brightnessctl -d asus::kbd_backlight set $new >/dev/null
