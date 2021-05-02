@@ -1,0 +1,15 @@
+#!/bin/bash
+
+[[ $1 != "" ]] || exit
+
+SCRIPT_DIR="$HOME/scripts"
+SCRIPT_NAME="$SCRIPT_DIR/$1"
+
+if [[ -f $SCRIPT_NAME ]]; then
+    echo "'$1' already exists"
+    exit 1
+else
+    echo "#!/bin/bash" > "$SCRIPT_NAME" 
+    chmod 744 "$SCRIPT_NAME"
+    nvim "$SCRIPT_NAME"
+fi
