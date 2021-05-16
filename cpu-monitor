@@ -4,7 +4,7 @@
 
 while true 
 do
-    sensors | grep -e '^Tdie:' -e '^cpu_fan'
+    sensors | grep '^Tdie:\|^cpu_fan'
     echo ' '
     sleep 2
 done
