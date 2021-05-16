@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# get cpu fan & temp values
+
+while true 
+do
+    sensors | grep -e '^Tdie:' -e '^cpu_fan'
+    echo ' '
+    sleep 2
+done
