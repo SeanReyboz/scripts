@@ -1,10 +1,21 @@
-#!/bin/bash
-## Author: Sean Reyboz
-## Script to get the battery status
+#!/usr/bin/env bash
+
+# Author: Sean Reyboz
+# Script to get the battery status
+
+# Variables --------------------------------
 bat="BAT0"
+batDir="/sys/class/power_supply/$bat"
+batCap="$batDir/capacity"
+batStatus="$batDir/status"
 
-### Print out the percentage of the battery
-[[ -r "/sys/class/power_supply/$bat/capacity" ]] && echo "$(cat /sys/class/power_supply/$bat/capacity)%" 
+# Read both battery capacity & status 
+[[ -r "$batCap" ]]    && read cap  < "$batCap"    || exit
+[[ -r "$batStatus" ]] && read stat < "$batStatus" || exit
 
-## Alert on low battery
-[[ $(cat /sys/class/power_supply/$bat/capacity) -eq 5 ]] && notify-send -u critical "Warning" "Low battery"
+[[ $cap -le 5 ]] && [[ $stat = 'Discharging' ]] && {
+    notify-send -u critical "Warning" "Low battery"
+}
+
+# Print the capacity
+printf '%s%%\n' "$cap"

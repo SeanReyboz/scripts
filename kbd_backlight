@@ -1,16 +1,15 @@
-#!/bin/sh
+#!/usr/bin/env bash
 # Author: Sean Reyboz
+
+[[ -n $1 ]] || exit 1
 
 # get current brght
 current=$(brightnessctl -d asus::kbd_backlight get)
 
 case $1 in 
     "up")
-        [ $current -ne 3 ] && new=$(( $current + 1 )) || exit 0 
-        ;;
+        [[ $current -ne 3 ]] && new=$(($current + 1)) || exit ;;
     "down")
-        [ $current -ne 0 ] && new=$(( $current - 1 )) || exit 0
-        ;;
+        [[ $current -ne 0 ]] && new=$(($current - 1)) || exit ;;
 esac
-
 brightnessctl -d asus::kbd_backlight set $new >/dev/null
